@@ -1,0 +1,80 @@
+{% block aside %}
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+      <a href="{% url 'scores:index' %}" class="app-brand-link">
+        <span class="app-brand-text demo menu-text fw-bolder ms-2">Kadpoly Livescore</span>
+      </a>
+
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+        <i class="bx bx-chevron-left bx-sm align-middle"></i>
+      </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+      <!-- Dashboard -->
+      
+      {% if request.user.is_staff %}
+        <li class="menu-item {% if request.path == "/" %}active{% endif %}">
+          <a href="{% url 'scores:index' %}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Analytics">Dashboard</div>
+          </a>
+        </li>
+      
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin Fixtures</span></li>
+
+        <li class="menu-item {% if 'fixtures' in request.path %}active{% endif %}">
+          <a href="javascript:void(0)" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-table"></i>
+            <div data-i18n="Extended UI">Manage Fixtures</div>
+          </a>
+          <ul class="menu-sub">
+            <li class="menu-item">
+              <a href="{% url 'scores:fixtures' 'rector-cup' %}" class="menu-link">
+                <div data-i18n="Perfect Scrollbar">Rector's Cup </div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 'scores:fixtures' 'departmental' %}" class="menu-link">
+                <div data-i18n="Text Divider">Departmental</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="menu-item {% if request.path == '/auth/teams/' or 'players' in request.path %} active{% endif %}">
+          <a href="{% url 'auth:team' %}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-group"></i>
+            <div data-i18n="Analytics">Manage Teams</div>
+          </a>
+        </li>
+      {% else %}
+        <li class="menu-item {% if request.path == "/" %}active {% endif %}">
+          <a href="{% url 'scores:index' %}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Analytics">Dashboard</div>
+          </a>
+        </li>
+
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Matches</span>
+      </li>
+
+      <li class="menu-item {% if request.path == "/matches/rector-cup/" %}active{% endif %}">
+        <a href="{% url 'scores:matches' 'rector-cup' %}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-medal"></i>
+          <div data-i18n="Analytics">Rector's Cup</div>
+        </a>
+      </li>
+      <li class="menu-item {% if request.path == "/matches/departmental/" %}active{% endif %}">
+        <a href="{% url 'scores:matches' 'departmental' %}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-medal"></i>
+          <div data-i18n="Analytics">Departmental</div>
+        </a>
+      </li>
+      {% endif %} 
+    </ul>
+  </aside>
+{% endblock %}
